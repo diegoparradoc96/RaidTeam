@@ -1,0 +1,44 @@
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.tmp
+*.log
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NuGet Packages
+*.nupkg
+**/[Pp]ackages/*
+*.nuget.props
+*.nuget.targets
+
+# WinUI 3 specific
+Generated Files/
+*.g.cs
+*.g.i.cs
+XamlTypeInfo.g.cs
+
+# Windows specific
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE specific
+*.swp
+*.swo
+.idea/
