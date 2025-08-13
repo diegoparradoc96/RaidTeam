@@ -9,16 +9,23 @@ namespace RaidTeam
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private readonly MainViewModel _viewModel;
+        private readonly DialogService _dialogService;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            // Crear el servicio de diálogos usando el XamlRoot de la ventana
-            var dialogService = new DialogService(this.Content.XamlRoot);
-            // Crear el ViewModel e inyectar el servicio
-            var viewModel = new MainViewModel(dialogService);
-            RootGrid.DataContext = viewModel;
-            //RootGrid.DataContext = new MainViewModel(viewModel);
+            _dialogService = new DialogService();
+            _viewModel = new MainViewModel();
+
+            // Suscripción al evento del ViewModel para abrir el modal
+            _viewModel.AddPlayerRequested += async () =>
+            {
+                return await _dialogService.ShowAddPlayerDialogAsync(this.Content.XamlRoot);
+            };
+
+            RootGrid.DataContext = _viewModel;
         }
     }
 }

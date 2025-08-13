@@ -1,5 +1,4 @@
-﻿using RaidTeam.Services;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -9,23 +8,26 @@ namespace RaidTeam.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly DialogService _dialogService;
+        public event Func<Task<string?>>? AddPlayerRequested;
 
-        [ObservableProperty]
-        private ObservableCollection<string> jugadores = new();
+        private ObservableCollection<string> _players = [];
 
-        public MainViewModel(DialogService dialogService)
+        public ObservableCollection<string> Players
         {
-            _dialogService = dialogService;
+            get => _players;
+            set => SetProperty(ref _players, value);
         }
 
         [RelayCommand]
         public async Task AddPlayerAsync()
-        {            
-            var nombreJugador = await _dialogService.ShowAddPlayerDialogAsync();
-            if (!string.IsNullOrWhiteSpace(nombreJugador))
+        {
+            if (AddPlayerRequested != null)
             {
-                Jugadores.Add(nombreJugador);
+                var playerName = await AddPlayerRequested.Invoke();
+                if (!string.IsNullOrWhiteSpace(playerName))
+                {
+                    Players.Add(playerName);
+                }
             }
         }
     }
