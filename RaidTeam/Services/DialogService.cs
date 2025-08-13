@@ -1,9 +1,10 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Threading.Tasks;
-using Microsoft.UI;
 
 namespace RaidTeam.Services
 {
@@ -19,47 +20,132 @@ namespace RaidTeam.Services
 
             string? rolSeleccionado = null;
 
-            var btnRol1 = new Button
+            // Crear imagen para warriors
+            var imgWarArms = new Image
             {
-                Content = "Tanque",
-                Margin = new Thickness(5),
-                Padding = new Thickness(10, 5, 10, 5)
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/Warrior_Arms.png")),
+                Width = 25,
+                Height = 25
+            };
+            var imgWarProt = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/Warrior_Prot.png")),
+                Width = 25,
+                Height = 25
+            };
+            var imgWarFury = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/Warrior_Fury.png")),
+                Width = 25,
+                Height = 25
+            };
+            // Crear imagen para Paladines
+            var imgPalaRetri = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/Paladin_Retri.png")),
+                Width = 25,
+                Height = 25
+            };
+            var imgPalaProt = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/Paladin_Prot.png")),
+                Width = 25,
+                Height = 25
+            };
+            var imgPalaHoly = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Assets/Paladin_Holy.png")),
+                Width = 25,
+                Height = 25
             };
 
-            var btnRol2 = new Button
+            // Crear botones para roles de Warrior
+            var btnWarArms = new Button
             {
-                Content = "Sanador",
-                Margin = new Thickness(5),
-                Padding = new Thickness(10, 5, 10, 5)
+                Content = imgWarArms,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 1, 1, 1)
+            };
+            var btnWarProt = new Button
+            {
+                Content = imgWarProt,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 1, 1, 1)
+            };
+            var btnWarFury = new Button
+            {
+                Content = imgWarFury,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 1, 1, 1)
+            };
+            //crear botones para roles de Paladin
+            var btnPalaRetri = new Button
+            {
+                Content = imgPalaRetri,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 1, 1, 1)
+            };
+            var btnPalaProt = new Button
+            {
+                Content = imgPalaProt,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 1, 1, 1)
+            };
+            var btnPalaHoly = new Button
+            {
+                Content = imgPalaHoly,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 1, 1, 1)
             };
 
             void SeleccionarRol(Button btn, string rol)
             {
                 // Quitar selección a todos
-                btnRol1.ClearValue(Button.BackgroundProperty);
-                btnRol2.ClearValue(Button.BackgroundProperty);
+                btnWarArms.ClearValue(Button.BackgroundProperty);
+                btnWarProt.ClearValue(Button.BackgroundProperty);
+                btnWarFury.ClearValue(Button.BackgroundProperty);
+                btnPalaRetri.ClearValue(Button.BackgroundProperty);
+                btnPalaProt.ClearValue(Button.BackgroundProperty);
+                btnPalaHoly.ClearValue(Button.BackgroundProperty);
 
                 // Seleccionar este
                 btn.Background = new SolidColorBrush(Microsoft.UI.Colors.LightBlue);
                 rolSeleccionado = rol;
             }
 
-            btnRol1.Click += (s, e) => SeleccionarRol(btnRol1, "Tanque");
-            btnRol2.Click += (s, e) => SeleccionarRol(btnRol2, "Sanador");
+            btnWarArms.Click += (s, e) => SeleccionarRol(btnWarArms, "Warrior Arms");
+            btnWarProt.Click += (s, e) => SeleccionarRol(btnWarProt, "Warrior Prot");
+            btnWarFury.Click += (s, e) => SeleccionarRol(btnWarFury, "Warrior Fury");
 
-            var panelRoles = new StackPanel
+            btnPalaRetri.Click += (s, e) => SeleccionarRol(btnPalaRetri, "Paladin Retribution");
+            btnPalaProt.Click += (s, e) => SeleccionarRol(btnPalaProt, "Paladin Protection");
+            btnPalaHoly.Click += (s, e) => SeleccionarRol(btnPalaHoly, "Paladin Holy");
+
+            var panelWarRoles = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+            var panelPalaRoles = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Margin = new Thickness(0, 10, 0, 0)
             };
 
-            panelRoles.Children.Add(btnRol1);
-            panelRoles.Children.Add(btnRol2);
+            panelWarRoles.Children.Add(btnWarArms);
+            panelWarRoles.Children.Add(btnWarProt);
+            panelWarRoles.Children.Add(btnWarFury);
+
+            panelPalaRoles.Children.Add(btnPalaRetri);
+            panelPalaRoles.Children.Add(btnPalaProt);
+            panelPalaRoles.Children.Add(btnPalaHoly);
 
             var stackPanel = new StackPanel();
             stackPanel.Children.Add(inputBox);
-            stackPanel.Children.Add(panelRoles);
+            stackPanel.Children.Add(panelWarRoles);
+            stackPanel.Children.Add(panelPalaRoles);
 
             var dialog = new ContentDialog
             {
