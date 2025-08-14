@@ -1,9 +1,18 @@
-﻿namespace RaidTeam.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RaidTeam.Models
 {
     public class Player
     {
-        public string Name { get; set; } = string.Empty;
-        public string Role { get; set; } = string.Empty;
-        public string IconPath { get; set; } = string.Empty;
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; } = "";
+
+        [Required]
+        public string Role { get; set; } = "";
+
+        public string IconPath { get; set; } = "";
     }
 }

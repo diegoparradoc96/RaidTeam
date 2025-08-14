@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace RaidTeam.Services
 {
-    public class DialogService
+    public class DialogService : IDialogService
     {
         private string? rolSeleccionado = null;
         private string? rolIconoSeleccionado = null;
         private Button? botonSeleccionado = null;
 
-        public async Task<Player> ShowAddPlayerDialogAsync(XamlRoot xamlRoot)
+        public async Task<Player?> ShowAddPlayerDialogAsync(XamlRoot xamlRoot)
         {
             var inputBox = new TextBox
             {
