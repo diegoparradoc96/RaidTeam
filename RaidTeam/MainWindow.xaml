@@ -25,23 +25,25 @@
 
         <!--Panel Izquierdo - Lista de Jugadores-->
         <Border Grid.Column="0"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                CornerRadius="8"
-                Margin="10">
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        CornerRadius="8"
+        Margin="10">
             <Grid Margin="20,20,20,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <!-- Texto -->
                     <ColumnDefinition Width="Auto" />
-                    <!-- Botón -->
                 </Grid.ColumnDefinitions>
 
-                <!-- Texto -->
+                <!-- Título -->
                 <TextBlock Text="Jugadores"
-                Style="{ThemeResource SubtitleTextBlockStyle}"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Left"
-                Grid.Column="0" />
+                   Style="{ThemeResource SubtitleTextBlockStyle}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Grid.Column="0" />
 
                 <!-- Botón -->
                 <Button Grid.Column="1"
@@ -55,6 +57,22 @@
                 FontWeight="Bold"
                 ToolTipService.ToolTip="Agregar nuevo jugador"
                 Command="{Binding AddPlayerCommand}" />
+
+                <!-- Lista de jugadores -->
+                <ListView Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0"
+                ItemsSource="{Binding Players}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Player"
+                            xmlns:models="using:RaidTeam.Models">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Image Source="{x:Bind IconPath}" Width="24" Height="24" />
+                                <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </Border>
 
