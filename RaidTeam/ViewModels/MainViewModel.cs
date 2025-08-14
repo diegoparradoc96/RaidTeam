@@ -2,17 +2,18 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RaidTeam.Models;
 using System;
 
 namespace RaidTeam.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public event Func<Task<string?>>? AddPlayerRequested;
+        public event Func<Task<Player>>? AddPlayerRequested;
 
-        private ObservableCollection<string> _players = [];
+        private ObservableCollection<Player> _players = [];
 
-        public ObservableCollection<string> Players
+        public ObservableCollection<Player> Players
         {
             get => _players;
             set => SetProperty(ref _players, value);
@@ -23,10 +24,10 @@ namespace RaidTeam.ViewModels
         {
             if (AddPlayerRequested != null)
             {
-                var playerName = await AddPlayerRequested.Invoke();
-                if (!string.IsNullOrWhiteSpace(playerName))
+                var player = await AddPlayerRequested.Invoke();
+                if (player != null)
                 {
-                    Players.Add(playerName);
+                    Players.Add(player);
                 }
             }
         }
