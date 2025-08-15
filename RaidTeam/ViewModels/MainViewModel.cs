@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using RaidTeam.Models;
 using RaidTeam.Repositories;
 using System;
+using System.Linq;
 
 namespace RaidTeam.ViewModels
 {
@@ -13,15 +14,22 @@ namespace RaidTeam.ViewModels
         private readonly IPlayerRepository _playerRepository;
 
         public event Func<Task<Player?>>? AddPlayerRequested;
-
-        public event Func<Player, Task<bool>>? DeletePlayerRequested;  // Nuevo evento para confirmación
+        public event Func<Player, Task<bool>>? DeletePlayerRequested;
 
         private ObservableCollection<Player> _players = [];
-
         public ObservableCollection<Player> Players
         {
             get => _players;
             set => SetProperty(ref _players, value);
+        }
+
+        private ObservableCollection<GroupSlot> _groupSlots = new(
+            Enumerable.Range(0, 5).Select(i => new GroupSlot { Position = i })
+        );
+        public ObservableCollection<GroupSlot> GroupSlots
+        {
+            get => _groupSlots;
+            set => SetProperty(ref _groupSlots, value);
         }
 
         public MainViewModel(IPlayerRepository playerRepository)
@@ -62,6 +70,12 @@ namespace RaidTeam.ViewModels
                     Players.Remove(player);
                 }
             }
+        }
+
+        public void AssignPlayerToSlot(GroupSlot slot, Player player)
+        {
+            slot.Player = player;
+            OnPropertyChanged(nameof(GroupSlots));
         }
     }
 }
