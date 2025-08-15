@@ -141,6 +141,16 @@
                                     <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0">
                                         <Image Source="{Binding Player.IconPath}" Width="24" Height="24" Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}" />
                                         <TextBlock Text="{Binding Player.Name}" VerticalAlignment="Center" Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}" />
+                                        <Button
+                                            Content="✖"
+                                            Width="32"
+                                            Height="32"
+                                            Padding="4"
+                                            Margin="5,0,0,0"
+                                            Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}"
+                                            Command="{Binding DataContext.RemovePlayerFromSlotCommand, ElementName=RootGrid}"
+                                            CommandParameter="{Binding}" 
+                                            ToolTipService.ToolTip="Retirar jugador del slot" />
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
