@@ -11,7 +11,10 @@ namespace RaidTeam.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private readonly IPlayerRepository _playerRepository;
+
         public event Func<Task<Player?>>? AddPlayerRequested;
+
+        public event Func<Player, Task<bool>>? DeletePlayerRequested;  // Nuevo evento para confirmación
 
         private ObservableCollection<Player> _players = [];
 
@@ -43,6 +46,20 @@ namespace RaidTeam.ViewModels
                 {
                     await _playerRepository.AddAsync(player);
                     Players.Add(player);
+                }
+            }
+        }
+
+        [RelayCommand]
+        public async Task DeletePlayerAsync(Player player)
+        {
+            if (DeletePlayerRequested != null)
+            {
+                var confirm = await DeletePlayerRequested.Invoke(player);
+                if (confirm)
+                {
+                    await _playerRepository.DeleteAsync(player.Id);
+                    Players.Remove(player);
                 }
             }
         }

@@ -218,5 +218,21 @@ namespace RaidTeam.Services
         {
             panelClases.Children.Add(claseContainer);
         }
+
+        public async Task<bool> ShowDeletePlayerConfirmationAsync(XamlRoot xamlRoot, Player player)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Confirmar eliminación",
+                Content = $"¿Estás seguro de que deseas eliminar al jugador {player.Name}?",
+                PrimaryButtonText = "Eliminar",
+                CloseButtonText = "Cancelar",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = xamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+            return result == ContentDialogResult.Primary;
+        }
     }
 }
