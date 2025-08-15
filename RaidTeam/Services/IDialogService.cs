@@ -7,5 +7,7 @@ namespace RaidTeam.Services
     public interface IDialogService
     {
         Task<Player?> ShowAddPlayerDialogAsync(XamlRoot xamlRoot);
+
+        Task<bool> ShowDeletePlayerConfirmationAsync(XamlRoot xamlRoot, Player player);
     }
 }
