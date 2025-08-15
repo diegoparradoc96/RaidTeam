@@ -60,9 +60,11 @@
 
                 <!-- Lista de jugadores -->
                 <ListView x:Name="PlayersListView" Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Margin="0,10,0,0"
-                ItemsSource="{Binding Players}">
+                          Grid.ColumnSpan="2"
+                          Margin="0,10,0,0"
+                          ItemsSource="{Binding Players}"
+                          DragItemsStarting="PlayersListView_DragItemsStarting"
+                          CanDragItems="True">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:Player"
                                       xmlns:models="using:RaidTeam.Models">
@@ -94,16 +96,53 @@
             </Grid>
         </Border>
 
-        <!--Panel Central - Placeholder para grupos (por ahora vac�o)-->
+        <!--Panel Central - Grupo de Raid-->
         <Border Grid.Column="1"
                 Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
                 CornerRadius="8"
                 Margin="5,10,5,10">
-            <TextBlock Text="Grupos de Raid (Pr�ximamente)"
-                      Style="{ThemeResource SubtitleTextBlockStyle}"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Opacity="0.6" />
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Título -->
+                <TextBlock Text="Grupo 1"
+                          Style="{ThemeResource SubtitleTextBlockStyle}"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,20" />
+
+                <!-- Caja de 5 slots para jugadores -->
+                <Border Grid.Row="1"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="10">
+                    <ItemsControl ItemsSource="{Binding GroupSlots}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:GroupSlot"
+                                          xmlns:local="using:RaidTeam.Models">
+                                <Border Height="50"
+                                        Margin="0,5"
+                                        AllowDrop="True"
+                                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="4"
+                                        Drop="PlayerSlot_Drop"
+                                        DragOver="PlayerSlot_DragOver">
+                                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0">
+                                        <Image Source="{Binding Player.IconPath}" Width="24" Height="24" Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}" />
+                                        <TextBlock Text="{Binding Player.Name}" VerticalAlignment="Center" Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+            </Grid>
         </Border>
 
         <!--Panel Derecho - Placeholder para clases (por ahora vac�o)-->
