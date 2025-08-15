@@ -23,13 +23,20 @@ namespace RaidTeam.ViewModels
             set => SetProperty(ref _players, value);
         }
 
-        private ObservableCollection<GroupSlot> _groupSlots = new(
-            Enumerable.Range(0, 5).Select(i => new GroupSlot { Position = i })
+        private ObservableCollection<Group> _groups = new(
+            Enumerable.Range(0, 6).Select(i => new Group
+            {
+                Name = $"Grupo {i + 1}",
+                Position = i,
+                Slots = new ObservableCollection<GroupSlot>(
+                    Enumerable.Range(0, 5).Select(j => new GroupSlot { Position = j })
+                )
+            })
         );
-        public ObservableCollection<GroupSlot> GroupSlots
+        public ObservableCollection<Group> Groups
         {
-            get => _groupSlots;
-            set => SetProperty(ref _groupSlots, value);
+            get => _groups;
+            set => SetProperty(ref _groups, value);
         }
 
         public MainViewModel(IPlayerRepository playerRepository)
@@ -75,7 +82,7 @@ namespace RaidTeam.ViewModels
         public void AssignPlayerToSlot(GroupSlot slot, Player player)
         {
             slot.Player = player;
-            OnPropertyChanged(nameof(GroupSlots));
+            OnPropertyChanged(nameof(Groups));
         }
 
         [RelayCommand]

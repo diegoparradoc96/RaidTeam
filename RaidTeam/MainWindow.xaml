@@ -7,6 +7,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:RaidTeam.Converters"
+    xmlns:models="using:RaidTeam.Models"
     mc:Ignorable="d"
     Title="RaidTeam - WoW TBC Raid Manager">
 
@@ -17,7 +18,14 @@
     <Grid x:Name="RootGrid">
         <Grid.Resources>
             <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
+            <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
+            <converters:PositionToRowConverter x:Key="PositionToRowConverter"/>
+            <converters:PositionToColumnConverter x:Key="PositionToColumnConverter"/>
         </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <!--Panel izquierdo para lista de jugadores-->
@@ -30,9 +38,10 @@
 
         <!--Panel Izquierdo - Lista de Jugadores-->
         <Border Grid.Column="0"
-        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-        CornerRadius="8"
-        Margin="10">
+                Grid.Row="0"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="8"
+                Margin="10">
             <Grid Margin="20,20,20,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -45,34 +54,34 @@
 
                 <!-- Título -->
                 <TextBlock Text="Jugadores"
-                   Style="{ThemeResource SubtitleTextBlockStyle}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Left"
-                   Grid.Column="0" />
+                          Style="{ThemeResource SubtitleTextBlockStyle}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Left"
+                          Grid.Column="0" />
 
                 <!-- Botón -->
                 <Button Grid.Column="1"
-                x:Name="AddPlayerButton"
-                Content="+"
-                Style="{ThemeResource AccentButtonStyle}"
-                Width="40"
-                Height="40"
-                CornerRadius="20"
-                FontSize="20"
-                FontWeight="Bold"
-                ToolTipService.ToolTip="Agregar nuevo jugador"
-                Command="{Binding AddPlayerCommand}" />
+                        x:Name="AddPlayerButton"
+                        Content="+"
+                        Style="{ThemeResource AccentButtonStyle}"
+                        Width="40"
+                        Height="40"
+                        CornerRadius="20"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        ToolTipService.ToolTip="Agregar nuevo jugador"
+                        Command="{Binding AddPlayerCommand}" />
 
                 <!-- Lista de jugadores -->
-                <ListView x:Name="PlayersListView" Grid.Row="1"
-                          Grid.ColumnSpan="2"
-                          Margin="0,10,0,0"
-                          ItemsSource="{Binding Players}"
-                          DragItemsStarting="PlayersListView_DragItemsStarting"
-                          CanDragItems="True">
+                <ListView x:Name="PlayersListView"
+                         Grid.Row="1"
+                         Grid.ColumnSpan="2"
+                         Margin="0,10,0,0"
+                         ItemsSource="{Binding Players}"
+                         DragItemsStarting="PlayersListView_DragItemsStarting"
+                         CanDragItems="True">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Player"
-                                      xmlns:models="using:RaidTeam.Models">
+                        <DataTemplate x:DataType="models:Player">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -101,67 +110,89 @@
             </Grid>
         </Border>
 
-        <!--Panel Central - Grupo de Raid-->
+        <!--Panel Central - Grupos de Raid-->
         <Border Grid.Column="1"
+                Grid.Row="0"
                 Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
                 CornerRadius="8"
                 Margin="5,10,5,10">
-            <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <!-- Título -->
-                <TextBlock Text="Grupo 1"
-                          Style="{ThemeResource SubtitleTextBlockStyle}"
-                          HorizontalAlignment="Left"
-                          Margin="0,0,0,20" />
-
-                <!-- Caja de 5 slots para jugadores -->
-                <Border Grid.Row="1"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="4"
-                        Padding="10">
-                    <ItemsControl ItemsSource="{Binding GroupSlots}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="local:GroupSlot"
-                                          xmlns:local="using:RaidTeam.Models">
-                                <Border Height="50"
-                                        Margin="0,5"
-                                        AllowDrop="True"
-                                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
-                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="4"
-                                        Drop="PlayerSlot_Drop"
-                                        DragOver="PlayerSlot_DragOver">
-                                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0">
-                                        <Image Source="{Binding Player.IconPath}" Width="24" Height="24" Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}" />
-                                        <TextBlock Text="{Binding Player.Name}" VerticalAlignment="Center" Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}" />
-                                        <Button
-                                            Content="✖"
-                                            Width="32"
-                                            Height="32"
-                                            Padding="4"
-                                            Margin="5,0,0,0"
-                                            Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}"
-                                            Command="{Binding DataContext.RemovePlayerFromSlotCommand, ElementName=RootGrid}"
-                                            CommandParameter="{Binding}" 
-                                            ToolTipService.ToolTip="Retirar jugador del slot" />
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Border>
-            </Grid>
+            <ItemsControl ItemsSource="{Binding Groups}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:Group">
+                        <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                Margin="10"
+                                Padding="10"
+                                Width="200">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}"
+                                          Style="{ThemeResource SubtitleTextBlockStyle}"
+                                          HorizontalAlignment="Left"
+                                          Margin="0,0,0,10"/>
+                                <ItemsControl ItemsSource="{Binding Slots}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="models:GroupSlot">
+                                            <Border Height="40"
+                                                    Margin="0,2"
+                                                    AllowDrop="True"
+                                                    Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4"
+                                                    Drop="PlayerSlot_Drop"
+                                                    DragOver="PlayerSlot_DragOver">
+                                                <Grid>
+                                                    <TextBlock Text="Vacío"
+                                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Visibility="{Binding Player, Converter={StaticResource NullToVisibleConverter}}"/>
+                                                    <StackPanel Orientation="Horizontal"
+                                                               Spacing="10"
+                                                               Margin="10,0"
+                                                               Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}">
+                                                        <Image Source="{Binding Player.IconPath}"
+                                                               Width="24"
+                                                               Height="24"/>
+                                                        <TextBlock Text="{Binding Player.Name}"
+                                                                  VerticalAlignment="Center"/>
+                                                        <Button Content="✖"
+                                                                Width="28"
+                                                                Height="28"
+                                                                Padding="4"
+                                                                Margin="5,0,0,0"
+                                                                Command="{Binding DataContext.RemovePlayerFromSlotCommand, ElementName=RootGrid}"
+                                                                CommandParameter="{Binding}"
+                                                                ToolTipService.ToolTip="Retirar jugador del slot"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Border>
 
-        <!--Panel Derecho - Placeholder para clases (por ahora vac�o)-->
+        <!--Panel Derecho - Placeholder para clases-->
         <Border Grid.Column="2"
+                Grid.Row="0"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 CornerRadius="8"
                 Margin="10">
