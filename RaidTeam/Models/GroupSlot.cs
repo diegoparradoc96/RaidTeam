@@ -1,10 +1,18 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using RaidTeam.Models;
 
 namespace RaidTeam.Models
 {
-    public class GroupSlot
+    public partial class GroupSlot : ObservableObject
     {
-        public int Position { get; set; }
-        public Player? Player { get; set; }
+        private int _position;
+        [ObservableProperty]
+        private Player? _player;
+
+        public int Position
+        {
+            get => _position;
+            set => SetProperty(ref _position, value);
+        }
     }
 }
