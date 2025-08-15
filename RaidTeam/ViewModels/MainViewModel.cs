@@ -77,5 +77,14 @@ namespace RaidTeam.ViewModels
             slot.Player = player;
             OnPropertyChanged(nameof(GroupSlots));
         }
+
+        [RelayCommand]
+        public void RemovePlayerFromSlot(GroupSlot slot)
+        {
+            if (slot != null)
+            {
+                slot.Player = null;
+            }
+        }
     }
 }
