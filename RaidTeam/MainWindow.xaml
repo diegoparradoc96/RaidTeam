@@ -154,7 +154,7 @@
                                                     CornerRadius="4"
                                                     Drop="PlayerSlot_Drop"
                                                     DragOver="PlayerSlot_DragOver">
-                                                <Grid>
+                                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                     <TextBlock Text="Vacío"
                                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                                HorizontalAlignment="Center"
@@ -163,12 +163,16 @@
                                                     <StackPanel Orientation="Horizontal"
                                                                Spacing="10"
                                                                Margin="10,0"
-                                                               Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}">
+                                                               Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}"
+                                                               HorizontalAlignment="Stretch"
+                                                               VerticalAlignment="Stretch">
                                                         <Image Source="{Binding Player.IconPath}"
                                                                Width="24"
-                                                               Height="24"/>
+                                                               Height="24"
+                                                               VerticalAlignment="Center"/>
                                                         <TextBlock Text="{Binding Player.Name}"
-                                                                  VerticalAlignment="Center"/>
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Stretch"/>
                                                         <Button Content="✖"
                                                                 Width="28"
                                                                 Height="28"
@@ -176,7 +180,8 @@
                                                                 Margin="5,0,0,0"
                                                                 Command="{Binding DataContext.RemovePlayerFromSlotCommand, ElementName=RootGrid}"
                                                                 CommandParameter="{Binding}"
-                                                                ToolTipService.ToolTip="Retirar jugador del slot"/>
+                                                                ToolTipService.ToolTip="Retirar jugador del slot"
+                                                                VerticalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Grid>
                                             </Border>
