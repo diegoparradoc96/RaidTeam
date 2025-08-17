@@ -160,29 +160,37 @@
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                Visibility="{Binding Player, Converter={StaticResource NullToVisibleConverter}}"/>
-                                                    <StackPanel Orientation="Horizontal"
-                                                               Spacing="10"
-                                                               Margin="10,0"
-                                                               Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}"
-                                                               HorizontalAlignment="Stretch"
-                                                               VerticalAlignment="Stretch">
+                                                    <Grid Margin="10,0"
+                                                          Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}"
+                                                          HorizontalAlignment="Stretch"
+                                                          VerticalAlignment="Stretch">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        
                                                         <Image Source="{Binding Player.IconPath}"
                                                                Width="24"
                                                                Height="24"
+                                                               Grid.Column="0"
                                                                VerticalAlignment="Center"/>
+                                                        
                                                         <TextBlock Text="{Binding Player.Name}"
-                                                                  VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Stretch"/>
+                                                                  Grid.Column="1"
+                                                                  Margin="10,0"
+                                                                  VerticalAlignment="Center"/>
+                                                        
                                                         <Button Content="✖"
+                                                                Grid.Column="2"
                                                                 Width="28"
                                                                 Height="28"
                                                                 Padding="4"
-                                                                Margin="5,0,0,0"
                                                                 Command="{Binding DataContext.RemovePlayerFromSlotCommand, ElementName=RootGrid}"
                                                                 CommandParameter="{Binding}"
                                                                 ToolTipService.ToolTip="Retirar jugador del slot"
                                                                 VerticalAlignment="Center"/>
-                                                    </StackPanel>
+                                                    </Grid>
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>
