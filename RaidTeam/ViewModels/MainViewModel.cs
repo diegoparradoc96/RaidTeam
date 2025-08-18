@@ -90,8 +90,16 @@ namespace RaidTeam.ViewModels
         {
             if (value != null && value != _currentRaidTeam)
             {
+                // Guardar los cambios de la raid actual antes de cambiar
+                if (_currentRaidTeam != null)
+                {
+                    SaveRaidTeamStateAsync().Wait();
+                }
+
+                // Actualizar la raid actual y cargar sus datos
                 _currentRaidTeam = value;
-                _raidTeamRepository.SetCurrentRaidTeamAsync(value.Id);
+                _currentRaidTeam.IsCurrent = true;
+                _raidTeamRepository.SetCurrentRaidTeamAsync(value.Id).Wait();
                 LoadCurrentRaidTeam();
             }
         }
@@ -112,6 +120,7 @@ namespace RaidTeam.ViewModels
                 }
             }
 
+            // Crear nuevos grupos y slots con las referencias correctas
             Groups = new ObservableCollection<Group>(
                 _currentRaidTeam.Groups.OrderBy(g => g.Position).Select(g => new Group
                 {
@@ -121,9 +130,11 @@ namespace RaidTeam.ViewModels
                         g.Slots.OrderBy(s => s.Position).Select(s => new GroupSlot
                         {
                             Position = s.Position,
-                            Player = s.Player
+                            Player = s.Player // La referencia al jugador viene de la base de datos
                         }))
                 }));
+
+            OnPropertyChanged(nameof(Groups));
         }
 
         [RelayCommand]
@@ -168,6 +179,7 @@ namespace RaidTeam.ViewModels
         {
             if (Groups == null || _currentRaidTeam == null) return;
 
+            // Actualizar los datos del modelo actual
             foreach (var group in Groups)
             {
                 var dbGroup = _currentRaidTeam.Groups.FirstOrDefault(g => g.Position == group.Position);
@@ -180,12 +192,22 @@ namespace RaidTeam.ViewModels
                         if (dbSlot != null)
                         {
                             dbSlot.PlayerId = slot.Player?.Id;
+                            dbSlot.Player = slot.Player; // Asegurar que la referencia al jugador se mantenga
                         }
                     }
                 }
             }
 
+            // Guardar en la base de datos
             await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
+
+            // Actualizar la referencia en la colección de raids
+            var raidInCollection = RaidTeams.FirstOrDefault(rt => rt.Id == _currentRaidTeam.Id);
+            if (raidInCollection != null)
+            {
+                var index = RaidTeams.IndexOf(raidInCollection);
+                RaidTeams[index] = _currentRaidTeam;
+            }
         }
 
         [RelayCommand]

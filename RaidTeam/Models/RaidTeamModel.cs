@@ -7,7 +7,8 @@ namespace RaidTeam.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; } = "Default";
+        public string Name { get; set; } = string.Empty;
+        public bool IsCurrent { get; set; }
         public List<RaidGroup> Groups { get; set; } = new();
     }
 
