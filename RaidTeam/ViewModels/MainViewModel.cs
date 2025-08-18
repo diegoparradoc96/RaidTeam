@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -58,8 +59,9 @@ namespace RaidTeam.ViewModels
         private async void LoadPlayersAsync()
         {
             var players = await _playerRepository.GetAllAsync();
-            _allPlayers = new ObservableCollection<Player>(players);
-            Players = new ObservableCollection<Player>(players);
+            // Ordenar los jugadores al cargarlos
+            _allPlayers = new ObservableCollection<Player>(players.OrderBy(p => GetClassOrder(p.Role)));
+            Players = new ObservableCollection<Player>(_allPlayers);
         }
 
         [RelayCommand]
@@ -119,22 +121,140 @@ namespace RaidTeam.ViewModels
             FilterPlayers();
         }
 
+        private int GetClassOrder(string? role)
+        {
+            if (string.IsNullOrEmpty(role))
+                return 999; // Poner al final los roles nulos o vacíos
+
+            // Extraer la clase base y especialización
+            var parts = role.Split(' ');
+            var baseClass = parts[0];
+            var spec = parts.Length > 1 ? parts[1] : "";
+            
+            // Orden principal por clase
+            var classOrder = baseClass switch
+            {
+                "Warrior" => 1,
+                "Paladin" => 2,
+                "Hunter" => 3,
+                "Rogue" => 4,
+                "Priest" => 5,
+                "Shaman" => 6,
+                "Mage" => 7,
+                "Warlock" => 8,
+                "Druid" => 9,
+                _ => 10
+            };
+
+            // Orden secundario por especialización
+            var specOrder = baseClass switch
+            {
+                "Warrior" => GetWarriorSpecOrder(spec),
+                "Paladin" => GetPaladinSpecOrder(spec),
+                "Hunter" => GetHunterSpecOrder(spec),
+                "Rogue" => GetRogueSpecOrder(spec),
+                "Priest" => GetPriestSpecOrder(spec),
+                "Shaman" => GetShamanSpecOrder(spec),
+                "Mage" => GetMageSpecOrder(spec),
+                "Warlock" => GetWarlockSpecOrder(spec),
+                "Druid" => GetDruidSpecOrder(spec),
+                _ => 0
+            };
+
+            // Combinar orden de clase y especialización
+            return (classOrder * 100) + specOrder;
+        }
+
+        private static int GetWarriorSpecOrder(string spec) => spec switch
+        {
+            "Arms" => 1,
+            "Fury" => 2,
+            "Protection" => 3,
+            _ => 0
+        };
+
+        private static int GetPaladinSpecOrder(string spec) => spec switch
+        {
+            "Holy" => 1,
+            "Protection" => 2,
+            "Retribution" => 3,
+            _ => 0
+        };
+
+        private static int GetHunterSpecOrder(string spec) => spec switch
+        {
+            "Beast" => 1, // Beast Mastery
+            "Marksmanship" => 2,
+            "Survival" => 3,
+            _ => 0
+        };
+
+        private static int GetRogueSpecOrder(string spec) => spec switch
+        {
+            "Assassination" => 1,
+            "Combat" => 2,
+            "Subtlety" => 3,
+            _ => 0
+        };
+
+        private static int GetPriestSpecOrder(string spec) => spec switch
+        {
+            "Discipline" => 1,
+            "Holy" => 2,
+            "Shadow" => 3,
+            _ => 0
+        };
+
+        private static int GetShamanSpecOrder(string spec) => spec switch
+        {
+            "Elemental" => 1,
+            "Enhancement" => 2,
+            "Restoration" => 3,
+            _ => 0
+        };
+
+        private static int GetMageSpecOrder(string spec) => spec switch
+        {
+            "Arcane" => 1,
+            "Fire" => 2,
+            "Frost" => 3,
+            _ => 0
+        };
+
+        private static int GetWarlockSpecOrder(string spec) => spec switch
+        {
+            "Affliction" => 1,
+            "Demonology" => 2,
+            "Destruction" => 3,
+            _ => 0
+        };
+
+        private static int GetDruidSpecOrder(string spec) => spec switch
+        {
+            "Balance" => 1,
+            "Feral" => 2,
+            "Restoration" => 3,
+            _ => 0
+        };
+
         private void FilterPlayers()
         {
-            var filteredPlayers = _allPlayers.AsEnumerable();
+            IEnumerable<Player> filteredPlayers = _allPlayers;
 
-            // Filtrar por rol si hay uno seleccionado
+            // Aplicar filtros si existen
             if (!string.IsNullOrEmpty(SelectedRole))
             {
-                filteredPlayers = filteredPlayers.Where(p => p.Role.StartsWith(SelectedRole));
+                filteredPlayers = filteredPlayers.Where(p => p.Role?.StartsWith(SelectedRole) == true);
             }
 
-            // Filtrar por texto de búsqueda si hay uno
             if (!string.IsNullOrEmpty(SearchText))
             {
                 filteredPlayers = filteredPlayers.Where(p => 
-                    p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+                    p.Name?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) == true);
             }
+
+            // Ordenar siempre por clase y especialización
+            filteredPlayers = filteredPlayers.OrderBy(p => GetClassOrder(p.Role));
 
             Players = new ObservableCollection<Player>(filteredPlayers);
         }
