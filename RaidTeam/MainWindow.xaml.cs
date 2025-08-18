@@ -97,5 +97,13 @@ namespace RaidTeam
                 }
             }
         }
+
+        private void FilterButton_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            if (_viewModel.ClearFilterCommand.CanExecute(null))
+            {
+                _viewModel.ClearFilterCommand.Execute(null);
+            }
+        }
     }
 }
