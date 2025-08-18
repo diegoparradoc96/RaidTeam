@@ -17,10 +17,10 @@
 
     <Grid x:Name="RootGrid">
         <Grid.Resources>
-            <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter" />
-            <converters:NullToVisibleConverter x:Key="NullToVisibleConverter" />
-            <converters:PositionToRowConverter x:Key="PositionToRowConverter" />
-            <converters:PositionToColumnConverter x:Key="PositionToColumnConverter" />
+            <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
+            <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
+            <converters:PositionToRowConverter x:Key="PositionToRowConverter"/>
+            <converters:PositionToColumnConverter x:Key="PositionToColumnConverter"/>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -102,25 +102,31 @@
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
-                                                        Command="{Binding FilterByRoleCommand}"
-                                                        CommandParameter="Warrior"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
                                                         ToolTipService.ToolTip="Warrior Arms">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Warrior Arms,ms-appx:///Assets/Warrior_Arms.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warrior_Arms.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
-                                                        Command="{Binding FilterByRoleCommand}"
-                                                        CommandParameter="Warrior"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
                                                         ToolTipService.ToolTip="Warrior Fury">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Warrior Fury,ms-appx:///Assets/Warrior_Fury.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warrior_Fury.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
-                                                        Command="{Binding FilterByRoleCommand}"
-                                                        CommandParameter="Warrior"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
                                                         ToolTipService.ToolTip="Warrior Protection">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Warrior Protection,ms-appx:///Assets/Warrior_Prot.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warrior_Prot.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -347,9 +353,18 @@
                                 </ScrollViewer>
                             </Flyout>
                         </Button.Flyout>
-                        <FontIcon Glyph="&#xE16E;"
-                                 FontFamily="Segoe MDL2 Assets"
-                                 FontSize="16"/>
+                        
+                        <!-- Ícono dinámico -->
+                        <Grid>
+                            <FontIcon Glyph="&#xE16E;"
+                                     FontFamily="Segoe MDL2 Assets"
+                                     FontSize="16"
+                                     Visibility="{Binding CurrentFilterIcon, Converter={StaticResource NullToVisibleConverter}}"/>
+                            <Image Source="{Binding CurrentFilterIcon}"
+                                   Width="30"
+                                   Height="30"
+                                   Visibility="{Binding CurrentFilterIcon, Converter={StaticResource NullToCollapsedConverter}}"/>
+                        </Grid>
                     </Button>
                 </Grid>
 
