@@ -52,25 +52,47 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Título -->
-                <TextBlock Text="Jugadores"
-                          Style="{ThemeResource SubtitleTextBlockStyle}"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Left"
-                          Grid.Column="0" />
+                <!-- Título y Botones -->
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <!-- Botón -->
-                <Button Grid.Column="1"
-                        x:Name="AddPlayerButton"
-                        Content="+"
-                        Style="{ThemeResource AccentButtonStyle}"
-                        Width="40"
-                        Height="40"
-                        CornerRadius="20"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        ToolTipService.ToolTip="Agregar nuevo jugador"
-                        Command="{Binding AddPlayerCommand}" />
+                    <TextBlock Text="Players"
+                              Style="{ThemeResource SubtitleTextBlockStyle}"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Grid.Column="0" />
+
+                    <!-- Botón Agregar -->
+                    <Button Grid.Column="1"
+                            x:Name="AddPlayerButton"
+                            Content="+"
+                            Style="{ThemeResource AccentButtonStyle}"
+                            Width="40"
+                            Height="40"
+                            CornerRadius="20"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Margin="0,0,8,0"
+                            ToolTipService.ToolTip="Agregar nuevo jugador"
+                            Command="{Binding AddPlayerCommand}" />
+
+                    <!-- Nuevo Botón -->
+                    <Button Grid.Column="2"
+                            Width="40"
+                            Height="40"
+                            Padding="4"
+                            Margin="0,0,0,0"
+                            CornerRadius="4"
+                            ToolTipService.ToolTip="Filtrar por clase">
+                        <Image Source="ms-appx:///Assets/Warrior_Arms.png"
+                               Width="30"
+                               Height="30" />
+                    </Button>
+                </Grid>
 
                 <!-- Lista de jugadores -->
                 <ListView x:Name="PlayersListView"
