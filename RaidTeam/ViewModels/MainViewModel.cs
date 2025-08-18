@@ -21,7 +21,7 @@ namespace RaidTeam.ViewModels
         private string? _selectedRole;
 
         [ObservableProperty]
-        private string _currentFilterIcon = ""; // Ícono actual del botón de filtro
+        private string? _currentFilterIcon = null;
 
         [ObservableProperty]
         private string _searchText = "";
@@ -143,7 +143,7 @@ namespace RaidTeam.ViewModels
         public void ClearFilter()
         {
             SelectedRole = null;
-            CurrentFilterIcon = ""; // Resetear el ícono cuando se limpia el filtro
+            CurrentFilterIcon = null;
             FilterPlayers();
         }
 
