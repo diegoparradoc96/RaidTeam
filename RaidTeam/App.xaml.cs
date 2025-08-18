@@ -30,6 +30,7 @@ namespace RaidTeam
 
             // Repositorios
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IRaidTeamRepository, RaidTeamRepository>();
 
             // Servicios
             services.AddSingleton<IDialogService, DialogService>();
@@ -42,6 +43,7 @@ namespace RaidTeam
             // Crear DB si no existe
             using var scope = Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<RaidTeamDbContext>();
+            // db.Database.EnsureDeleted(); // No borrar la base de datos en cada inicio
             db.Database.EnsureCreated();
         }
 
