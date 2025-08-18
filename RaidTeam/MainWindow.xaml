@@ -144,17 +144,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Paladin Holy">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Paladin Holy,ms-appx:///Assets/Paladin_Holy.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Paladin_Holy.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Paladin Protection">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Paladin Protection,ms-appx:///Assets/Paladin_Prot.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Paladin_Prot.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Paladin Retribution">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Paladin Retribution,ms-appx:///Assets/Paladin_Retri.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Paladin_Retri.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -171,17 +186,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Hunter Beast Mastery">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Hunter Beast Mastery,ms-appx:///Assets/Hunter_BM.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Hunter_BM.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Hunter Marksmanship">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Hunter Marksmanship,ms-appx:///Assets/Hunter_MM.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Hunter_MM.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Hunter Survival">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Hunter Survival,ms-appx:///Assets/Hunter_Survival.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Hunter_Survival.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -198,17 +228,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Rogue Assassination">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Rogue Assassination,ms-appx:///Assets/Rogue_Assassination.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Rogue_Assassination.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Rogue Combat">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Rogue Combat,ms-appx:///Assets/Rogue_Combat.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Rogue_Combat.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Rogue Subtlety">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Rogue Subtlety,ms-appx:///Assets/Rogue_Subtlety.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Rogue_Subtlety.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -225,17 +270,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Priest Discipline">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Priest Discipline,ms-appx:///Assets/Priest_Discipline.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Priest_Discipline.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Priest Holy">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Priest Holy,ms-appx:///Assets/Priest_Holy.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Priest_Holy.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Priest Shadow">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Priest Shadow,ms-appx:///Assets/Priest_Shadow.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Priest_Shadow.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -252,17 +312,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Shaman Elemental">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Shaman Elemental,ms-appx:///Assets/Shaman_Elemental.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Shaman_Elemental.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Shaman Enhancement">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Shaman Enhancement,ms-appx:///Assets/Shaman_Enha.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Shaman_Enha.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Shaman Restoration">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Shaman Restoration,ms-appx:///Assets/Shaman_Resto.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Shaman_Resto.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -279,17 +354,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Mage Arcane">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Mage Arcane,ms-appx:///Assets/Mage_Arcane.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Mage_Arcane.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Mage Fire">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Mage Fire,ms-appx:///Assets/Mage_Fire.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Mage_Fire.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Mage Frost">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Mage Frost,ms-appx:///Assets/Mage_Frost.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Mage_Frost.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -306,17 +396,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Warlock Affliction">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Warlock Affliction,ms-appx:///Assets/Warlock_Affliction.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warlock_Affliction.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Warlock Demonology">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Warlock Demonology,ms-appx:///Assets/Warlock_Demonology.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warlock_Demonology.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Warlock Destruction">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Warlock Destruction,ms-appx:///Assets/Warlock_Destruction.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warlock_Destruction.png"
                                                            Width="30"
                                                            Height="30"/>
@@ -333,17 +438,32 @@
                                             <StackPanel Orientation="Horizontal" 
                                                       HorizontalAlignment="Center" 
                                                       Margin="0,5">
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Druid Balance">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Druid Balance,ms-appx:///Assets/Druid_Balance.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Druid_Balance.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Druid Feral">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Druid Feral,ms-appx:///Assets/Druid_Feral.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Druid_Feral.png"
                                                            Width="30"
                                                            Height="30"/>
                                                 </Button>
-                                                <Button Padding="4" Margin="2">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleWithIconCommand}"
+                                                        ToolTipService.ToolTip="Druid Restoration">
+                                                    <Button.CommandParameter>
+                                                        <x:String>Druid Restoration,ms-appx:///Assets/Druid_Resto.png</x:String>
+                                                    </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Druid_Resto.png"
                                                            Width="30"
                                                            Height="30"/>
