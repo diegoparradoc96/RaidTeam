@@ -154,7 +154,8 @@
                                                     CornerRadius="4"
                                                     Drop="PlayerSlot_Drop"
                                                     DragOver="PlayerSlot_DragOver">
-                                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <Grid HorizontalAlignment="Stretch" 
+                                                      VerticalAlignment="Stretch">
                                                     <TextBlock Text="Vacío"
                                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                                HorizontalAlignment="Center"
@@ -163,7 +164,9 @@
                                                     <Grid Margin="10,0"
                                                           Visibility="{Binding Player, Converter={StaticResource NullToCollapsedConverter}}"
                                                           HorizontalAlignment="Stretch"
-                                                          VerticalAlignment="Stretch">
+                                                          VerticalAlignment="Stretch"
+                                                          CanDrag="True"
+                                                          DragStarting="SlotPlayer_DragStarting">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="*"/>
