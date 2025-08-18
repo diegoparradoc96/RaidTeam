@@ -29,6 +29,9 @@ namespace RaidTeam
             _viewModel.DeletePlayerRequested += async (player) =>
                 await _dialogService.ShowDeletePlayerConfirmationAsync(Content.XamlRoot, player);
 
+            _viewModel.EditRaidNameRequested += async () =>
+                await _dialogService.ShowEditRaidNameDialogAsync(Content.XamlRoot, _viewModel.RaidTeamName);
+
             RootGrid.DataContext = _viewModel;
         }
 

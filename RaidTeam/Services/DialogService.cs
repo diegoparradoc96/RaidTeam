@@ -234,5 +234,34 @@ namespace RaidTeam.Services
             var result = await dialog.ShowAsync();
             return result == ContentDialogResult.Primary;
         }
+
+        public async Task<string?> ShowEditRaidNameDialogAsync(XamlRoot xamlRoot, string currentName)
+        {
+            var inputBox = new TextBox
+            {
+                PlaceholderText = "Raid team name",
+                Text = currentName,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Edit raid team name",
+                Content = inputBox,
+                PrimaryButtonText = "Save",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = xamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(inputBox.Text))
+            {
+                return inputBox.Text.Trim();
+            }
+
+            return null;
+        }
     }
 }
