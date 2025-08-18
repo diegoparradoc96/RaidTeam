@@ -26,7 +26,7 @@ namespace RaidTeam.ViewModels
         private ObservableCollection<Group> _groups = new(
             Enumerable.Range(0, 6).Select(i => new Group
             {
-                Name = $"Grupo {i + 1}",
+                Name = i < 5 ? $"Group {i + 1}" : "Bench",
                 Position = i,
                 Slots = new ObservableCollection<GroupSlot>(
                     Enumerable.Range(0, 5).Select(j => new GroupSlot { Position = j })
