@@ -93,8 +93,8 @@
                             RightTapped="FilterButton_RightTapped">
                         <Button.Flyout>
                             <Flyout Placement="Bottom">
-                                <ScrollViewer MaxHeight="400">
-                                    <StackPanel>
+                                <ScrollViewer MaxHeight="400" Padding="0,0,4,0">
+                                    <StackPanel Margin="0,0,8,0">
                                         <!-- Warrior -->
                                         <StackPanel>
                                             <TextBlock Text="Warrior"
