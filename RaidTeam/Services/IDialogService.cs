@@ -11,5 +11,7 @@ namespace RaidTeam.Services
         Task<bool> ShowDeletePlayerConfirmationAsync(XamlRoot xamlRoot, Player player);
 
         Task<string?> ShowEditRaidNameDialogAsync(XamlRoot xamlRoot, string currentName);
+
+        Task<string?> ShowCreateRaidTeamDialogAsync(XamlRoot xamlRoot);
     }
 }

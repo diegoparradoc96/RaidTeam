@@ -32,6 +32,9 @@ namespace RaidTeam
             _viewModel.EditRaidNameRequested += async () =>
                 await _dialogService.ShowEditRaidNameDialogAsync(Content.XamlRoot, _viewModel.RaidTeamName);
 
+            _viewModel.CreateRaidTeamRequested += async () =>
+                await _dialogService.ShowCreateRaidTeamDialogAsync(Content.XamlRoot);
+
             RootGrid.DataContext = _viewModel;
         }
 

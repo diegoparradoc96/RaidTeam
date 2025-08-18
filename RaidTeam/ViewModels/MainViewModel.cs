@@ -21,9 +21,16 @@ namespace RaidTeam.ViewModels
         [ObservableProperty]
         private string _raidTeamName = "";
 
+        [ObservableProperty]
+        private ObservableCollection<RaidTeamModel> _raidTeams = new();
+
+        [ObservableProperty]
+        private RaidTeamModel? _selectedRaidTeam;
+
         public event Func<Task<Player?>>? AddPlayerRequested;
         public event Func<Player, Task<bool>>? DeletePlayerRequested;
         public event Func<Task<string?>>? EditRaidNameRequested;
+        public event Func<Task<string?>>? CreateRaidTeamRequested;
 
         [ObservableProperty]
         private string? _selectedRole;
@@ -53,7 +60,7 @@ namespace RaidTeam.ViewModels
             _playerRepository = playerRepository;
             _raidTeamRepository = raidTeamRepository;
             LoadPlayersAsync();
-            LoadRaidTeamAsync();
+            LoadRaidTeamsAsync();
         }
 
         private async void LoadPlayersAsync()
@@ -63,14 +70,35 @@ namespace RaidTeam.ViewModels
             Players = new ObservableCollection<Player>(_allPlayers);
         }
 
-        private async void LoadRaidTeamAsync()
+        private async void LoadRaidTeamsAsync()
         {
+            var raidTeams = await _raidTeamRepository.GetAllAsync();
+            RaidTeams = new ObservableCollection<RaidTeamModel>(raidTeams);
+            
             _currentRaidTeam = await _raidTeamRepository.GetCurrentAsync();
             if (_currentRaidTeam == null)
             {
-                _currentRaidTeam = CreateDefaultRaidTeam();
-                await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
+                _currentRaidTeam = await _raidTeamRepository.CreateNewRaidTeamAsync("Default");
+                RaidTeams.Add(_currentRaidTeam);
             }
+
+            SelectedRaidTeam = _currentRaidTeam;
+            LoadCurrentRaidTeam();
+        }
+
+        partial void OnSelectedRaidTeamChanged(RaidTeamModel? value)
+        {
+            if (value != null && value != _currentRaidTeam)
+            {
+                _currentRaidTeam = value;
+                _raidTeamRepository.SetCurrentRaidTeamAsync(value.Id);
+                LoadCurrentRaidTeam();
+            }
+        }
+
+        private void LoadCurrentRaidTeam()
+        {
+            if (_currentRaidTeam == null) return;
 
             RaidTeamName = _currentRaidTeam.Name;
 
@@ -96,6 +124,21 @@ namespace RaidTeam.ViewModels
                             Player = s.Player
                         }))
                 }));
+        }
+
+        [RelayCommand]
+        private async Task CreateNewRaidTeamAsync()
+        {
+            if (CreateRaidTeamRequested != null)
+            {
+                var name = await CreateRaidTeamRequested.Invoke();
+                if (!string.IsNullOrEmpty(name))
+                {
+                    var newRaidTeam = await _raidTeamRepository.CreateNewRaidTeamAsync(name);
+                    RaidTeams.Add(newRaidTeam);
+                    SelectedRaidTeam = newRaidTeam;
+                }
+            }
         }
 
         private RaidTeamModel CreateDefaultRaidTeam()

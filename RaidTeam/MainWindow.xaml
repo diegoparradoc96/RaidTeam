@@ -548,15 +548,29 @@
                               HorizontalAlignment="Center"
                               Spacing="8"
                               Margin="0,10,0,20">
-                        <TextBlock Text="{Binding RaidTeamName}"
-                                 Style="{ThemeResource TitleTextBlockStyle}"
-                                 VerticalAlignment="Center"/>
+                        <!-- Raid selection ComboBox -->
+                        <ComboBox ItemsSource="{Binding RaidTeams}"
+                                 SelectedItem="{Binding SelectedRaidTeam, Mode=TwoWay}"
+                                 DisplayMemberPath="Name"
+                                 MinWidth="200"/>
+                                 
+                        <!-- Create new raid button -->
+                        <Button Command="{Binding CreateNewRaidTeamCommand}"
+                                Width="32"
+                                Height="32"
+                                Style="{ThemeResource AccentButtonStyle}"
+                                CornerRadius="16"
+                                Padding="4"
+                                ToolTipService.ToolTip="Crear nueva raid">
+                            <FontIcon Glyph="&#xE710;" FontSize="12"/>
+                        </Button>
+
+                        <!-- Edit name button -->
                         <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}"
                                 Command="{Binding EditRaidTeamNameCommand}"
                                 Width="32"
                                 Height="32"
                                 Padding="4"
-                                VerticalAlignment="Center"
                                 ToolTipService.ToolTip="Editar nombre de la raid">
                             <FontIcon Glyph="&#xE70F;" FontSize="12"/>
                         </Button>
