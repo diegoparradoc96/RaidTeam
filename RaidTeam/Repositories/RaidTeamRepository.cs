@@ -31,8 +31,7 @@ namespace RaidTeam.Repositories
                 .Include(rt => rt.Groups)
                     .ThenInclude(g => g.Slots)
                         .ThenInclude(s => s.Player)
-                .OrderBy(rt => rt.Id)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(rt => rt.IsCurrent);
         }
 
         public async Task<List<RaidTeamModel>> GetAllAsync()
@@ -71,19 +70,21 @@ namespace RaidTeam.Repositories
 
         public async Task SetCurrentRaidTeamAsync(int raidTeamId)
         {
-            var raidTeam = await _context.RaidTeams.FindAsync(raidTeamId);
-            if (raidTeam != null)
+            // Primero, quitar la marca de actual de todas las raids
+            var currentRaids = await _context.RaidTeams.Where(rt => rt.IsCurrent).ToListAsync();
+            foreach (var raid in currentRaids)
             {
-                var currentFirst = await _context.RaidTeams.OrderBy(rt => rt.Id).FirstOrDefaultAsync();
-                if (currentFirst != null && currentFirst.Id != raidTeamId)
-                {
-                    // Intercambiar IDs para hacer que el seleccionado sea el primero
-                    var tempId = currentFirst.Id;
-                    currentFirst.Id = raidTeam.Id;
-                    raidTeam.Id = tempId;
-                    await _context.SaveChangesAsync();
-                }
+                raid.IsCurrent = false;
             }
+
+            // Marcar la nueva raid como actual
+            var newCurrentRaid = await _context.RaidTeams.FindAsync(raidTeamId);
+            if (newCurrentRaid != null)
+            {
+                newCurrentRaid.IsCurrent = true;
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task SaveRaidTeamAsync(RaidTeamModel raidTeam)
@@ -102,6 +103,7 @@ namespace RaidTeam.Repositories
             {
                 // Actualizar propiedades simples
                 existing.Name = raidTeam.Name;
+                existing.IsCurrent = raidTeam.IsCurrent;
 
                 // Actualizar grupos
                 foreach (var groupModel in raidTeam.Groups)
