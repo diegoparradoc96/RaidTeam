@@ -19,7 +19,7 @@ namespace RaidTeam.Services
         {
             var inputBox = new TextBox
             {
-                PlaceholderText = "Nombre del jugador",
+                PlaceholderText = "Player name",
                 Margin = new Thickness(0, 10, 0, 0)
             };
 
@@ -125,7 +125,7 @@ namespace RaidTeam.Services
             // Dialog
             var dialog = new ContentDialog
             {
-                Title = "Agregar Jugador",
+                Title = "add player",
                 Content = stackPanel,
                 PrimaryButtonText = "Guardar",
                 CloseButtonText = "Cancelar",
