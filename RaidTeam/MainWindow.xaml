@@ -87,7 +87,8 @@
                             Padding="4"
                             Margin="0,0,0,0"
                             CornerRadius="4"
-                            ToolTipService.ToolTip="Filtrar por clase">
+                            ToolTipService.ToolTip="Filtrar por clase"
+                            RightTapped="FilterButton_RightTapped">
                         <Button.Flyout>
                             <Flyout Placement="Bottom">
                                 <ScrollViewer MaxHeight="400">
