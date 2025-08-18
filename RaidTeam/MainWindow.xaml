@@ -581,7 +581,7 @@
                                                             DragOver="PlayerSlot_DragOver">
                                                         <Grid HorizontalAlignment="Stretch"
                                                               VerticalAlignment="Stretch">
-                                                            <TextBlock Text="Vacío"
+                                                            <TextBlock Text=""
                                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                                        HorizontalAlignment="Center"
                                                                        VerticalAlignment="Center"
