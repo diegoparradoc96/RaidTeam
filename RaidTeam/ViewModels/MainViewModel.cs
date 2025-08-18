@@ -13,7 +13,10 @@ namespace RaidTeam.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private readonly IPlayerRepository _playerRepository;
+        private readonly IRaidTeamRepository _raidTeamRepository;
         private ObservableCollection<Player> _allPlayers = [];
+        private RaidTeamModel? _currentRaidTeam;
+        private Dictionary<(int groupPosition, int slotPosition), int> _slotIds = new();
 
         public event Func<Task<Player?>>? AddPlayerRequested;
         public event Func<Player, Task<bool>>? DeletePlayerRequested;
@@ -34,38 +37,110 @@ namespace RaidTeam.ViewModels
             set => SetProperty(ref _players, value);
         }
 
-        private ObservableCollection<Group> _groups = new(
-            Enumerable.Range(0, 6).Select(i => new Group
-            {
-                Name = i < 5 ? $"Group {i + 1}" : "Bench",
-                Position = i,
-                Slots = new ObservableCollection<GroupSlot>(
-                    Enumerable.Range(0, 5).Select(j => new GroupSlot { Position = j })
-                )
-            })
-        );
+        private ObservableCollection<Group> _groups = [];
         public ObservableCollection<Group> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
         }
 
-        public MainViewModel(IPlayerRepository playerRepository)
+        public MainViewModel(IPlayerRepository playerRepository, IRaidTeamRepository raidTeamRepository)
         {
             _playerRepository = playerRepository;
+            _raidTeamRepository = raidTeamRepository;
             LoadPlayersAsync();
+            LoadRaidTeamAsync();
         }
 
         private async void LoadPlayersAsync()
         {
             var players = await _playerRepository.GetAllAsync();
-            // Ordenar los jugadores al cargarlos
             _allPlayers = new ObservableCollection<Player>(players.OrderBy(p => GetClassOrder(p.Role)));
             Players = new ObservableCollection<Player>(_allPlayers);
         }
 
+        private async void LoadRaidTeamAsync()
+        {
+            _currentRaidTeam = await _raidTeamRepository.GetCurrentAsync();
+            if (_currentRaidTeam == null)
+            {
+                _currentRaidTeam = CreateDefaultRaidTeam();
+                await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
+            }
+
+            // Store slot IDs for later use
+            _slotIds.Clear();
+            foreach (var group in _currentRaidTeam.Groups)
+            {
+                foreach (var slot in group.Slots)
+                {
+                    _slotIds[(group.Position, slot.Position)] = slot.Id;
+                }
+            }
+
+            Groups = new ObservableCollection<Group>(
+                _currentRaidTeam.Groups.OrderBy(g => g.Position).Select(g => new Group
+                {
+                    Name = g.Name,
+                    Position = g.Position,
+                    Slots = new ObservableCollection<GroupSlot>(
+                        g.Slots.OrderBy(s => s.Position).Select(s => new GroupSlot
+                        {
+                            Position = s.Position,
+                            Player = s.Player
+                        }))
+                }));
+        }
+
+        private RaidTeamModel CreateDefaultRaidTeam()
+        {
+            var raidTeam = new RaidTeamModel { Name = "Default" };
+            
+            for (int i = 1; i <= 6; i++)
+            {
+                var group = new RaidGroup 
+                { 
+                    Name = i < 6 ? $"Group {i}" : "Bench",
+                    Position = i - 1
+                };
+
+                for (int j = 0; j < 5; j++)
+                {
+                    group.Slots.Add(new RaidSlot { Position = j });
+                }
+
+                raidTeam.Groups.Add(group);
+            }
+
+            return raidTeam;
+        }
+
+        private async Task SaveRaidTeamStateAsync()
+        {
+            if (Groups == null || _currentRaidTeam == null) return;
+
+            foreach (var group in Groups)
+            {
+                var dbGroup = _currentRaidTeam.Groups.FirstOrDefault(g => g.Position == group.Position);
+                if (dbGroup != null)
+                {
+                    foreach (var slot in group.Slots)
+                    {
+                        var slotId = _slotIds[(group.Position, slot.Position)];
+                        var dbSlot = dbGroup.Slots.FirstOrDefault(s => s.Id == slotId);
+                        if (dbSlot != null)
+                        {
+                            dbSlot.PlayerId = slot.Player?.Id;
+                        }
+                    }
+                }
+            }
+
+            await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
+        }
+
         [RelayCommand]
-        public async Task AddPlayerAsync()
+        private async Task AddPlayerAsync()
         {
             if (AddPlayerRequested != null)
             {
@@ -199,7 +274,7 @@ namespace RaidTeam.ViewModels
 
         private static int GetPriestSpecOrder(string spec) => spec switch
         {
-            "Discipline" => 1,
+            "Disciplinary" => 1,
             "Holy" => 2,
             "Shadow" => 3,
             _ => 0
@@ -267,18 +342,20 @@ namespace RaidTeam.ViewModels
             FilterPlayers();
         }
 
-        public void AssignPlayerToSlot(GroupSlot slot, Player player)
+        public async Task AssignPlayerToSlot(GroupSlot slot, Player player)
         {
             slot.Player = player;
             OnPropertyChanged(nameof(Groups));
+            await SaveRaidTeamStateAsync();
         }
 
         [RelayCommand]
-        public void RemovePlayerFromSlot(GroupSlot slot)
+        public async Task RemovePlayerFromSlot(GroupSlot slot)
         {
             if (slot != null)
             {
                 slot.Player = null;
+                await SaveRaidTeamStateAsync();
             }
         }
     }
