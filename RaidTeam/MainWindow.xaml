@@ -17,10 +17,10 @@
 
     <Grid x:Name="RootGrid">
         <Grid.Resources>
-            <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
-            <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
-            <converters:PositionToRowConverter x:Key="PositionToRowConverter"/>
-            <converters:PositionToColumnConverter x:Key="PositionToColumnConverter"/>
+            <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter" />
+            <converters:NullToVisibleConverter x:Key="NullToVisibleConverter" />
+            <converters:PositionToRowConverter x:Key="PositionToRowConverter" />
+            <converters:PositionToColumnConverter x:Key="PositionToColumnConverter" />
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -66,7 +66,7 @@
                               Style="{ThemeResource SubtitleTextBlockStyle}"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Left"
-                              Grid.Column="0"/>
+                              Grid.Column="0" />
 
                     <!-- Botón Agregar -->
                     <Button Grid.Column="1"
@@ -100,9 +100,9 @@
                                             <TextBlock Text="Warrior"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -112,7 +112,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warrior_Arms.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -122,7 +122,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warrior_Fury.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -132,7 +132,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warrior_Prot.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -142,9 +142,9 @@
                                             <TextBlock Text="Paladin"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -154,7 +154,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Paladin_Holy.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -164,7 +164,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Paladin_Prot.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -174,7 +174,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Paladin_Retri.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -184,9 +184,9 @@
                                             <TextBlock Text="Hunter"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -196,7 +196,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Hunter_BM.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -206,7 +206,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Hunter_MM.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -216,7 +216,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Hunter_Survival.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -226,9 +226,9 @@
                                             <TextBlock Text="Rogue"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -238,7 +238,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Rogue_Assassination.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -248,7 +248,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Rogue_Combat.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -258,7 +258,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Rogue_Subtlety.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -268,9 +268,9 @@
                                             <TextBlock Text="Priest"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -280,7 +280,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Priest_Discipline.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -290,7 +290,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Priest_Holy.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -300,7 +300,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Priest_Shadow.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -310,9 +310,9 @@
                                             <TextBlock Text="Shaman"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -322,7 +322,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Shaman_Elemental.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -332,7 +332,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Shaman_Enha.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -342,7 +342,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Shaman_Resto.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -352,9 +352,9 @@
                                             <TextBlock Text="Mage"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -364,7 +364,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Mage_Arcane.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -374,7 +374,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Mage_Fire.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -384,7 +384,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Mage_Frost.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -394,9 +394,9 @@
                                             <TextBlock Text="Warlock"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -406,7 +406,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warlock_Affliction.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -416,7 +416,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warlock_Demonology.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -426,7 +426,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Warlock_Destruction.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -436,9 +436,9 @@
                                             <TextBlock Text="Druid"
                                                       FontWeight="SemiBold"
                                                       HorizontalAlignment="Center"
-                                                      Margin="0,5"/>
-                                            <StackPanel Orientation="Horizontal" 
-                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5" />
+                                            <StackPanel Orientation="Horizontal"
+                                                      HorizontalAlignment="Center"
                                                       Margin="0,5">
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -448,7 +448,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Druid_Balance.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -458,7 +458,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Druid_Feral.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                                 <Button Padding="4" Margin="2"
                                                         Command="{Binding FilterByRoleWithIconCommand}"
@@ -468,7 +468,7 @@
                                                     </Button.CommandParameter>
                                                     <Image Source="ms-appx:///Assets/Druid_Resto.png"
                                                            Width="30"
-                                                           Height="30"/>
+                                                           Height="30" />
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
@@ -476,13 +476,13 @@
                                 </ScrollViewer>
                             </Flyout>
                         </Button.Flyout>
-                        
+
                         <!-- Ícono dinámico -->
                         <Grid>
-                            <FontIcon Glyph="&#xE16E;"
-                                     FontFamily="Segoe MDL2 Assets"
-                                     FontSize="16"
-                                     Visibility="{Binding CurrentFilterIcon, Converter={StaticResource NullToVisibleConverter}}"/>
+                            <Image Source="ms-appx:///Assets/Band.png"
+                                   Width="30"
+                                   Height="30"
+                                   Visibility="{Binding CurrentFilterIcon, Converter={StaticResource NullToVisibleConverter}}"/>
                             <Image Source="{Binding CurrentFilterIcon}"
                                    Width="30"
                                    Height="30"
@@ -495,7 +495,7 @@
                 <TextBox Grid.Row="1"
                         PlaceholderText="Buscar jugador..."
                         Margin="0,8,0,0"
-                        Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!-- Lista de jugadores -->
                 <ListView x:Name="PlayersListView"
