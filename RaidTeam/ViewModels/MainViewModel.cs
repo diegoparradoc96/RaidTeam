@@ -20,6 +20,9 @@ namespace RaidTeam.ViewModels
         [ObservableProperty]
         private string? _selectedRole;
 
+        [ObservableProperty]
+        private string _currentFilterIcon = ""; // Ícono actual del botón de filtro
+
         private ObservableCollection<Player> _players = [];
         public ObservableCollection<Player> Players
         {
@@ -93,11 +96,27 @@ namespace RaidTeam.ViewModels
             FilterPlayers();
         }
 
+        [RelayCommand]
+        public void FilterByRoleWithIcon(string parameter)
+        {
+            if (!string.IsNullOrEmpty(parameter))
+            {
+                var parts = parameter.Split(',');
+                if (parts.Length == 2)
+                {
+                    SelectedRole = parts[0];
+                    CurrentFilterIcon = parts[1];
+                    FilterPlayers();
+                }
+            }
+        }
+
         private void FilterPlayers()
         {
             if (string.IsNullOrEmpty(SelectedRole))
             {
                 Players = new ObservableCollection<Player>(_allPlayers);
+                CurrentFilterIcon = ""; // Resetear el ícono cuando no hay filtro
             }
             else
             {
@@ -110,6 +129,7 @@ namespace RaidTeam.ViewModels
         public void ClearFilter()
         {
             SelectedRole = null;
+            CurrentFilterIcon = ""; // Resetear el ícono cuando se limpia el filtro
             FilterPlayers();
         }
 
