@@ -263,5 +263,33 @@ namespace RaidTeam.Services
 
             return null;
         }
+
+        public async Task<string?> ShowCreateRaidTeamDialogAsync(XamlRoot xamlRoot)
+        {
+            var inputBox = new TextBox
+            {
+                PlaceholderText = "Raid team name",
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Create new raid team",
+                Content = inputBox,
+                PrimaryButtonText = "Create",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = xamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(inputBox.Text))
+            {
+                return inputBox.Text.Trim();
+            }
+
+            return null;
+        }
     }
 }

@@ -10,7 +10,10 @@ namespace RaidTeam.Repositories
     public interface IRaidTeamRepository
     {
         Task<RaidTeamModel?> GetCurrentAsync();
+        Task<List<RaidTeamModel>> GetAllAsync();
         Task SaveRaidTeamAsync(RaidTeamModel raidTeam);
+        Task<RaidTeamModel> CreateNewRaidTeamAsync(string name);
+        Task SetCurrentRaidTeamAsync(int raidTeamId);
     }
 
     public class RaidTeamRepository : IRaidTeamRepository
@@ -28,7 +31,59 @@ namespace RaidTeam.Repositories
                 .Include(rt => rt.Groups)
                     .ThenInclude(g => g.Slots)
                         .ThenInclude(s => s.Player)
+                .OrderBy(rt => rt.Id)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<RaidTeamModel>> GetAllAsync()
+        {
+            return await _context.RaidTeams
+                .Include(rt => rt.Groups)
+                    .ThenInclude(g => g.Slots)
+                        .ThenInclude(s => s.Player)
+                .ToListAsync();
+        }
+
+        public async Task<RaidTeamModel> CreateNewRaidTeamAsync(string name)
+        {
+            var raidTeam = new RaidTeamModel { Name = name };
+                
+            for (int i = 1; i <= 6; i++)
+            {
+                var group = new RaidGroup 
+                { 
+                    Name = i < 6 ? $"Group {i}" : "Bench",
+                    Position = i - 1
+                };
+
+                for (int j = 0; j < 5; j++)
+                {
+                    group.Slots.Add(new RaidSlot { Position = j });
+                }
+
+                raidTeam.Groups.Add(group);
+            }
+
+            _context.RaidTeams.Add(raidTeam);
+            await _context.SaveChangesAsync();
+            return raidTeam;
+        }
+
+        public async Task SetCurrentRaidTeamAsync(int raidTeamId)
+        {
+            var raidTeam = await _context.RaidTeams.FindAsync(raidTeamId);
+            if (raidTeam != null)
+            {
+                var currentFirst = await _context.RaidTeams.OrderBy(rt => rt.Id).FirstOrDefaultAsync();
+                if (currentFirst != null && currentFirst.Id != raidTeamId)
+                {
+                    // Intercambiar IDs para hacer que el seleccionado sea el primero
+                    var tempId = currentFirst.Id;
+                    currentFirst.Id = raidTeam.Id;
+                    raidTeam.Id = tempId;
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
 
         public async Task SaveRaidTeamAsync(RaidTeamModel raidTeam)
@@ -36,7 +91,7 @@ namespace RaidTeam.Repositories
             var existing = await _context.RaidTeams
                 .Include(rt => rt.Groups)
                     .ThenInclude(g => g.Slots)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(rt => rt.Id == raidTeam.Id);
 
             if (existing == null)
             {
