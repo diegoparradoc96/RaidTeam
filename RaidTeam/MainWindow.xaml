@@ -347,9 +347,9 @@
                                 </ScrollViewer>
                             </Flyout>
                         </Button.Flyout>
-                        <Image Source="ms-appx:///Assets/Warrior_Arms.png"
-                               Width="30"
-                               Height="30"/>
+                        <FontIcon Glyph="&#xE16E;"
+                                 FontFamily="Segoe MDL2 Assets"
+                                 FontSize="16"/>
                     </Button>
                 </Grid>
 
