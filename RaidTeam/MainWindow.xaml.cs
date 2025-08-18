@@ -5,6 +5,7 @@ using RaidTeam.Models;
 using RaidTeam.Services;
 using RaidTeam.ViewModels;
 using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace RaidTeam
 {
@@ -12,6 +13,8 @@ namespace RaidTeam
     {
         private readonly MainViewModel _viewModel;
         private readonly IDialogService _dialogService;
+        private GroupSlot? _dragSourceSlot;
+        private Group? _dragSourceGroup;
 
         public MainWindow(MainViewModel viewModel, IDialogService dialogService)
         {
@@ -30,31 +33,75 @@ namespace RaidTeam
             RootGrid.DataContext = _viewModel;
         }
 
-        // Drag & Drop para jugadores
+        // Drag & Drop para jugadores desde la lista
         private void PlayersListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             if (e.Items.FirstOrDefault() is Player player)
             {
                 e.Data.Properties["Player"] = player;
-                e.Data.RequestedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+                e.Data.RequestedOperation = DataPackageOperation.Copy;
+            }
+        }
+
+        // Drag & Drop para jugadores dentro de slots
+        private void SlotPlayer_DragStarting(UIElement sender, DragStartingEventArgs e)
+        {
+            if (sender.GetType().GetProperty("DataContext")?.GetValue(sender) is GroupSlot sourceSlot && 
+                sourceSlot.Player != null)
+            {
+                _dragSourceSlot = sourceSlot;
+                _dragSourceGroup = _viewModel.Groups.FirstOrDefault(g => g.Slots.Contains(sourceSlot));
+                e.Data.Properties["SlotPlayer"] = sourceSlot.Player;
+                e.Data.RequestedOperation = DataPackageOperation.Move;
             }
         }
 
         private void PlayerSlot_DragOver(object sender, DragEventArgs e)
         {
+            // Aceptar drag desde la lista de jugadores
             if (e.DataView.Properties.ContainsKey("Player"))
             {
-                e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+                e.AcceptedOperation = DataPackageOperation.Copy;
                 e.DragUIOverride.Caption = "Asignar jugador a slot";
+            }
+            // Aceptar drag desde otro slot del mismo grupo
+            else if (e.DataView.Properties.ContainsKey("SlotPlayer") && 
+                     sender is FrameworkElement element && 
+                     element.DataContext is GroupSlot targetSlot)
+            {
+                var targetGroup = _viewModel.Groups.FirstOrDefault(g => g.Slots.Contains(targetSlot));
+                if (targetGroup == _dragSourceGroup && targetSlot != _dragSourceSlot)
+                {
+                    e.AcceptedOperation = DataPackageOperation.Move;
+                    e.DragUIOverride.Caption = "Mover jugador a este slot";
+                }
             }
         }
 
         private void PlayerSlot_Drop(object sender, DragEventArgs e)
         {
-            if (sender is FrameworkElement element && element.DataContext is GroupSlot slot &&
-                e.DataView.Properties.TryGetValue("Player", out var playerObj) && playerObj is Player player)
+            if (sender is FrameworkElement element && element.DataContext is GroupSlot targetSlot)
             {
-                _viewModel.AssignPlayerToSlot(slot, player);
+                // Drop desde la lista de jugadores
+                if (e.DataView.Properties.TryGetValue("Player", out var playerObj) && 
+                    playerObj is Player player)
+                {
+                    _viewModel.AssignPlayerToSlot(targetSlot, player);
+                }
+                // Drop desde otro slot
+                else if (e.DataView.Properties.TryGetValue("SlotPlayer", out var slotPlayerObj) && 
+                         slotPlayerObj is Player slotPlayer &&
+                         _dragSourceSlot != null)
+                {
+                    var targetGroup = _viewModel.Groups.FirstOrDefault(g => g.Slots.Contains(targetSlot));
+                    if (targetGroup == _dragSourceGroup && targetSlot != _dragSourceSlot)
+                    {
+                        // Intercambiar jugadores entre slots
+                        var tempPlayer = targetSlot.Player;
+                        targetSlot.Player = slotPlayer;
+                        _dragSourceSlot.Player = tempPlayer;
+                    }
+                }
             }
         }
     }
