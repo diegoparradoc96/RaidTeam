@@ -441,6 +441,17 @@ namespace RaidTeam.ViewModels
                     RaidTeamName = newName;
                     _currentRaidTeam.Name = newName;
                     await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
+
+                    // Actualizar la referencia en la colección de raids
+                    var index = RaidTeams.IndexOf(_currentRaidTeam);
+                    if (index != -1)
+                    {
+                        RaidTeams[index] = _currentRaidTeam;
+                        // Forzar la actualización del ComboBox
+                        OnPropertyChanged(nameof(RaidTeams));
+                        // Re-seleccionar la raid para asegurar que la UI se actualice
+                        SelectedRaidTeam = _currentRaidTeam;
+                    }
                 }
             }
         }
