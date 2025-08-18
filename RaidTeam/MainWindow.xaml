@@ -544,10 +544,24 @@
                          VerticalScrollBarVisibility="Auto">
                 <StackPanel HorizontalAlignment="Center"
                            VerticalAlignment="Center">
-                    <TextBlock Text="{Binding RaidTeamName}"
-                             Style="{ThemeResource TitleTextBlockStyle}"
-                             HorizontalAlignment="Center"
-                             Margin="0,10,0,20"/>
+                    <StackPanel Orientation="Horizontal" 
+                              HorizontalAlignment="Center"
+                              Spacing="8"
+                              Margin="0,10,0,20">
+                        <TextBlock Text="{Binding RaidTeamName}"
+                                 Style="{ThemeResource TitleTextBlockStyle}"
+                                 VerticalAlignment="Center"/>
+                        <Button Style="{ThemeResource DateTimePickerFlyoutButtonStyle}"
+                                Command="{Binding EditRaidTeamNameCommand}"
+                                Width="32"
+                                Height="32"
+                                Padding="4"
+                                VerticalAlignment="Center"
+                                ToolTipService.ToolTip="Editar nombre de la raid">
+                            <FontIcon Glyph="&#xE70F;" FontSize="12"/>
+                        </Button>
+                    </StackPanel>
+                    
                     <ItemsControl ItemsSource="{Binding Groups}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

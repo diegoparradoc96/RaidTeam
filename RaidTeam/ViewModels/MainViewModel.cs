@@ -23,6 +23,7 @@ namespace RaidTeam.ViewModels
 
         public event Func<Task<Player?>>? AddPlayerRequested;
         public event Func<Player, Task<bool>>? DeletePlayerRequested;
+        public event Func<Task<string?>>? EditRaidNameRequested;
 
         [ObservableProperty]
         private string? _selectedRole;
@@ -361,6 +362,21 @@ namespace RaidTeam.ViewModels
             {
                 slot.Player = null;
                 await SaveRaidTeamStateAsync();
+            }
+        }
+
+        [RelayCommand]
+        private async Task EditRaidTeamNameAsync()
+        {
+            if (EditRaidNameRequested != null && _currentRaidTeam != null)
+            {
+                var newName = await EditRaidNameRequested.Invoke();
+                if (!string.IsNullOrEmpty(newName))
+                {
+                    RaidTeamName = newName;
+                    _currentRaidTeam.Name = newName;
+                    await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
+                }
             }
         }
     }

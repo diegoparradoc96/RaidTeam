@@ -9,5 +9,7 @@ namespace RaidTeam.Services
         Task<Player?> ShowAddPlayerDialogAsync(XamlRoot xamlRoot);
 
         Task<bool> ShowDeletePlayerConfirmationAsync(XamlRoot xamlRoot, Player player);
+
+        Task<string?> ShowEditRaidNameDialogAsync(XamlRoot xamlRoot, string currentName);
     }
 }
