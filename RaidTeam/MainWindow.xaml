@@ -80,7 +80,7 @@
                             ToolTipService.ToolTip="Agregar nuevo jugador"
                             Command="{Binding AddPlayerCommand}" />
 
-                    <!-- Nuevo Botón -->
+                    <!-- Nuevo Botón con Flyout -->
                     <Button Grid.Column="2"
                             Width="40"
                             Height="40"
@@ -88,9 +88,268 @@
                             Margin="0,0,0,0"
                             CornerRadius="4"
                             ToolTipService.ToolTip="Filtrar por clase">
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <ScrollViewer MaxHeight="400">
+                                    <StackPanel>
+                                        <!-- Warrior -->
+                                        <StackPanel>
+                                            <TextBlock Text="Warrior"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleCommand}"
+                                                        CommandParameter="Warrior"
+                                                        ToolTipService.ToolTip="Warrior Arms">
+                                                    <Image Source="ms-appx:///Assets/Warrior_Arms.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleCommand}"
+                                                        CommandParameter="Warrior"
+                                                        ToolTipService.ToolTip="Warrior Fury">
+                                                    <Image Source="ms-appx:///Assets/Warrior_Fury.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2"
+                                                        Command="{Binding FilterByRoleCommand}"
+                                                        CommandParameter="Warrior"
+                                                        ToolTipService.ToolTip="Warrior Protection">
+                                                    <Image Source="ms-appx:///Assets/Warrior_Prot.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Paladin -->
+                                        <StackPanel>
+                                            <TextBlock Text="Paladin"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Paladin_Holy.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Paladin_Prot.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Paladin_Retri.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Hunter -->
+                                        <StackPanel>
+                                            <TextBlock Text="Hunter"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Hunter_BM.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Hunter_MM.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Hunter_Survival.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Rogue -->
+                                        <StackPanel>
+                                            <TextBlock Text="Rogue"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Rogue_Assassination.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Rogue_Combat.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Rogue_Subtlety.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Priest -->
+                                        <StackPanel>
+                                            <TextBlock Text="Priest"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Priest_Discipline.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Priest_Holy.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Priest_Shadow.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Shaman -->
+                                        <StackPanel>
+                                            <TextBlock Text="Shaman"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Shaman_Elemental.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Shaman_Enha.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Shaman_Resto.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Mage -->
+                                        <StackPanel>
+                                            <TextBlock Text="Mage"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Mage_Arcane.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Mage_Fire.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Mage_Frost.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Warlock -->
+                                        <StackPanel>
+                                            <TextBlock Text="Warlock"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Warlock_Affliction.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Warlock_Demonology.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Warlock_Destruction.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Druid -->
+                                        <StackPanel>
+                                            <TextBlock Text="Druid"
+                                                      FontWeight="SemiBold"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="0,5"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                      HorizontalAlignment="Center" 
+                                                      Margin="0,5">
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Druid_Balance.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Druid_Feral.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                                <Button Padding="4" Margin="2">
+                                                    <Image Source="ms-appx:///Assets/Druid_Resto.png"
+                                                           Width="30"
+                                                           Height="30"/>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Flyout>
+                        </Button.Flyout>
                         <Image Source="ms-appx:///Assets/Warrior_Arms.png"
                                Width="30"
-                               Height="30" />
+                               Height="30"/>
                     </Button>
                 </Grid>
 

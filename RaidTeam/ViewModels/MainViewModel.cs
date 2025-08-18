@@ -12,9 +12,13 @@ namespace RaidTeam.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private readonly IPlayerRepository _playerRepository;
+        private ObservableCollection<Player> _allPlayers = [];
 
         public event Func<Task<Player?>>? AddPlayerRequested;
         public event Func<Player, Task<bool>>? DeletePlayerRequested;
+
+        [ObservableProperty]
+        private string? _selectedRole;
 
         private ObservableCollection<Player> _players = [];
         public ObservableCollection<Player> Players
@@ -48,6 +52,7 @@ namespace RaidTeam.ViewModels
         private async void LoadPlayersAsync()
         {
             var players = await _playerRepository.GetAllAsync();
+            _allPlayers = new ObservableCollection<Player>(players);
             Players = new ObservableCollection<Player>(players);
         }
 
@@ -60,7 +65,8 @@ namespace RaidTeam.ViewModels
                 if (player != null)
                 {
                     await _playerRepository.AddAsync(player);
-                    Players.Add(player);
+                    _allPlayers.Add(player);
+                    FilterPlayers();
                 }
             }
         }
@@ -74,9 +80,37 @@ namespace RaidTeam.ViewModels
                 if (confirm)
                 {
                     await _playerRepository.DeleteAsync(player.Id);
-                    Players.Remove(player);
+                    _allPlayers.Remove(player);
+                    FilterPlayers();
                 }
             }
+        }
+
+        [RelayCommand]
+        public void FilterByRole(string role)
+        {
+            SelectedRole = role;
+            FilterPlayers();
+        }
+
+        private void FilterPlayers()
+        {
+            if (string.IsNullOrEmpty(SelectedRole))
+            {
+                Players = new ObservableCollection<Player>(_allPlayers);
+            }
+            else
+            {
+                Players = new ObservableCollection<Player>(
+                    _allPlayers.Where(p => p.Role.StartsWith(SelectedRole)));
+            }
+        }
+
+        [RelayCommand]
+        public void ClearFilter()
+        {
+            SelectedRole = null;
+            FilterPlayers();
         }
 
         public void AssignPlayerToSlot(GroupSlot slot, Player player)
