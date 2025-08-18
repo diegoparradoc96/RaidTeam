@@ -30,6 +30,7 @@ namespace RaidTeam
 
             // Repositorios
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IRaidTeamRepository, RaidTeamRepository>();
 
             // Servicios
             services.AddSingleton<IDialogService, DialogService>();
