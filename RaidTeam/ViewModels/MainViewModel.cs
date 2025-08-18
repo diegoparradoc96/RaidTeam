@@ -18,6 +18,9 @@ namespace RaidTeam.ViewModels
         private RaidTeamModel? _currentRaidTeam;
         private Dictionary<(int groupPosition, int slotPosition), int> _slotIds = new();
 
+        [ObservableProperty]
+        private string _raidTeamName = "";
+
         public event Func<Task<Player?>>? AddPlayerRequested;
         public event Func<Player, Task<bool>>? DeletePlayerRequested;
 
@@ -67,6 +70,8 @@ namespace RaidTeam.ViewModels
                 _currentRaidTeam = CreateDefaultRaidTeam();
                 await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
             }
+
+            RaidTeamName = _currentRaidTeam.Name;
 
             // Store slot IDs for later use
             _slotIds.Clear();
