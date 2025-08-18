@@ -23,6 +23,9 @@ namespace RaidTeam.ViewModels
         [ObservableProperty]
         private string _currentFilterIcon = ""; // Ícono actual del botón de filtro
 
+        [ObservableProperty]
+        private string _searchText = "";
+
         private ObservableCollection<Player> _players = [];
         public ObservableCollection<Player> Players
         {
@@ -111,18 +114,29 @@ namespace RaidTeam.ViewModels
             }
         }
 
+        partial void OnSearchTextChanged(string value)
+        {
+            FilterPlayers();
+        }
+
         private void FilterPlayers()
         {
-            if (string.IsNullOrEmpty(SelectedRole))
+            var filteredPlayers = _allPlayers.AsEnumerable();
+
+            // Filtrar por rol si hay uno seleccionado
+            if (!string.IsNullOrEmpty(SelectedRole))
             {
-                Players = new ObservableCollection<Player>(_allPlayers);
-                CurrentFilterIcon = ""; // Resetear el ícono cuando no hay filtro
+                filteredPlayers = filteredPlayers.Where(p => p.Role.StartsWith(SelectedRole));
             }
-            else
+
+            // Filtrar por texto de búsqueda si hay uno
+            if (!string.IsNullOrEmpty(SearchText))
             {
-                Players = new ObservableCollection<Player>(
-                    _allPlayers.Where(p => p.Role.StartsWith(SelectedRole)));
+                filteredPlayers = filteredPlayers.Where(p => 
+                    p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
             }
+
+            Players = new ObservableCollection<Player>(filteredPlayers);
         }
 
         [RelayCommand]
