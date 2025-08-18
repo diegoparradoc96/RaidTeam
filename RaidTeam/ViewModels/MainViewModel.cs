@@ -108,7 +108,9 @@ namespace RaidTeam.ViewModels
         {
             if (_currentRaidTeam == null) return;
 
+            // Establecer el nombre primero
             RaidTeamName = _currentRaidTeam.Name;
+            OnPropertyChanged(nameof(RaidTeamName));
 
             // Store slot IDs for later use
             _slotIds.Clear();
@@ -130,7 +132,7 @@ namespace RaidTeam.ViewModels
                         g.Slots.OrderBy(s => s.Position).Select(s => new GroupSlot
                         {
                             Position = s.Position,
-                            Player = s.Player // La referencia al jugador viene de la base de datos
+                            Player = s.Player
                         }))
                 }));
 
@@ -192,12 +194,12 @@ namespace RaidTeam.ViewModels
                         if (dbSlot != null)
                         {
                             dbSlot.PlayerId = slot.Player?.Id;
-                            dbSlot.Player = slot.Player; // Asegurar que la referencia al jugador se mantenga
+                            dbSlot.Player = slot.Player;
                         }
                     }
                 }
             }
-
+            
             // Guardar en la base de datos
             await _raidTeamRepository.SaveRaidTeamAsync(_currentRaidTeam);
 
@@ -206,7 +208,14 @@ namespace RaidTeam.ViewModels
             if (raidInCollection != null)
             {
                 var index = RaidTeams.IndexOf(raidInCollection);
-                RaidTeams[index] = _currentRaidTeam;
+                if (index != -1)
+                {
+                    RaidTeams[index] = _currentRaidTeam;
+                    // Forzar actualización del ComboBox
+                    OnPropertyChanged(nameof(RaidTeams));
+                    // Re-seleccionar la raid actual
+                    SelectedRaidTeam = _currentRaidTeam;
+                }
             }
         }
 
@@ -415,9 +424,16 @@ namespace RaidTeam.ViewModels
 
         public async Task AssignPlayerToSlot(GroupSlot slot, Player player)
         {
+            if (_currentRaidTeam == null) return;
+
+            // Asignar el jugador al slot
             slot.Player = player;
-            OnPropertyChanged(nameof(Groups));
+            
+            // Actualizar el modelo y la base de datos
             await SaveRaidTeamStateAsync();
+            
+            // Notificar los cambios en la UI
+            OnPropertyChanged(nameof(Groups));
         }
 
         [RelayCommand]
