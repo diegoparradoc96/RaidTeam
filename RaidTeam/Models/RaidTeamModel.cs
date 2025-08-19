@@ -1,0 +1,36 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace RaidTeam.Models
+{
+    public class RaidTeamModel
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public bool IsCurrent { get; set; }
+        public List<RaidGroup> Groups { get; set; } = new();
+    }
+
+    public class RaidGroup
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int Position { get; set; }
+        public int RaidTeamModelId { get; set; }
+        public RaidTeamModel RaidTeam { get; set; } = null!;
+        public List<RaidSlot> Slots { get; set; } = new();
+    }
+
+    public class RaidSlot
+    {
+        [Key]
+        public int Id { get; set; }
+        public int Position { get; set; }
+        public int RaidGroupId { get; set; }
+        public RaidGroup RaidGroup { get; set; } = null!;
+        public int? PlayerId { get; set; }
+        public Player? Player { get; set; }
+    }
+}

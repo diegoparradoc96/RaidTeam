@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace RaidTeam.Services
 {
-    public class DialogService
+    public class DialogService : IDialogService
     {
         private string? rolSeleccionado = null;
         private string? rolIconoSeleccionado = null;
         private Button? botonSeleccionado = null;
 
-        public async Task<Player> ShowAddPlayerDialogAsync(XamlRoot xamlRoot)
+        public async Task<Player?> ShowAddPlayerDialogAsync(XamlRoot xamlRoot)
         {
             var inputBox = new TextBox
             {
-                PlaceholderText = "Nombre del jugador",
+                PlaceholderText = "Player name",
                 Margin = new Thickness(0, 10, 0, 0)
             };
 
@@ -125,7 +125,7 @@ namespace RaidTeam.Services
             // Dialog
             var dialog = new ContentDialog
             {
-                Title = "Agregar Jugador",
+                Title = "add player",
                 Content = stackPanel,
                 PrimaryButtonText = "Guardar",
                 CloseButtonText = "Cancelar",
@@ -217,6 +217,79 @@ namespace RaidTeam.Services
         private void AddClase(StackPanel panelClases, StackPanel claseContainer)
         {
             panelClases.Children.Add(claseContainer);
+        }
+
+        public async Task<bool> ShowDeletePlayerConfirmationAsync(XamlRoot xamlRoot, Player player)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "Confirmar eliminación",
+                Content = $"¿Estás seguro de que deseas eliminar al jugador {player.Name}?",
+                PrimaryButtonText = "Eliminar",
+                CloseButtonText = "Cancelar",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = xamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+            return result == ContentDialogResult.Primary;
+        }
+
+        public async Task<string?> ShowEditRaidNameDialogAsync(XamlRoot xamlRoot, string currentName)
+        {
+            var inputBox = new TextBox
+            {
+                PlaceholderText = "Raid team name",
+                Text = currentName,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Edit raid team name",
+                Content = inputBox,
+                PrimaryButtonText = "Save",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = xamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(inputBox.Text))
+            {
+                return inputBox.Text.Trim();
+            }
+
+            return null;
+        }
+
+        public async Task<string?> ShowCreateRaidTeamDialogAsync(XamlRoot xamlRoot)
+        {
+            var inputBox = new TextBox
+            {
+                PlaceholderText = "Raid team name",
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Create new raid team",
+                Content = inputBox,
+                PrimaryButtonText = "Create",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = xamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(inputBox.Text))
+            {
+                return inputBox.Text.Trim();
+            }
+
+            return null;
         }
     }
 }
