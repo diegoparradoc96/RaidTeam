@@ -127,8 +127,8 @@ namespace RaidTeam.Services
             {
                 Title = "add player",
                 Content = stackPanel,
-                PrimaryButtonText = "Guardar",
-                CloseButtonText = "Cancelar",
+                PrimaryButtonText = "Save",
+                CloseButtonText = "Cancel",
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = xamlRoot
             };
