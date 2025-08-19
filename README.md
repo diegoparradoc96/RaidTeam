@@ -1,8 +1,8 @@
 # WoW Raid Team Manager
 
-A modern Windows desktop application built with WinUI 3 for managing World of Warcraft raid teams. This tool helps raid leaders organize their teams efficiently with an intuitive drag-and-drop interface.
+A modern Windows desktop application built with WinUI 3 for managing World of Warcraft TBC raid teams. This tool helps raid leaders organize their teams efficiently with an intuitive drag-and-drop interface.
 
-![App Screenshot](.github/screenshot.png)
+<img width="1414" height="702" alt="image" src="https://github.com/user-attachments/assets/0c4998f5-0cb7-436d-9d32-44ae28640609" />
 
 ## Features
 
@@ -14,7 +14,7 @@ A modern Windows desktop application built with WinUI 3 for managing World of Wa
 - **Player Management**
   - Add players with their class and specialization
   - Visual class icons for easy identification
-  - Support for all WoW classic classes and specs:
+  - Support for all WoW classic TBC classes and specs:
     - Warriors (Arms, Fury, Protection)
     - Paladins (Holy, Protection, Retribution)
     - Hunters (Beast Mastery, Marksmanship, Survival)
